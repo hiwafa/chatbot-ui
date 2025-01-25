@@ -3,7 +3,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function TabLayout() {
 
-  const pathName = usePathname();
+  const path_name = usePathname();
+  console.log("path_name: ", path_name);
+
 
   return (
     <Tabs
@@ -16,7 +18,7 @@ export default function TabLayout() {
         // headerTintColor: '#fff',
         tabBarStyle: {
         // backgroundColor: '#25292e',
-          display: pathName.startsWith('/dictionary/') && pathName.length > 15 ? 'none' : 'flex'
+          display: path_name.startsWith('/dictionary/') && !path_name.endsWith('undefined') && path_name.length > 21 ? 'none' : 'flex'
         },
       }}
     >
