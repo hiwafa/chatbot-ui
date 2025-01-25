@@ -3,6 +3,7 @@ import { DictionaryProvider } from "@/src/context/DictionaryContext";
 
 import { Stack, useRouter } from 'expo-router';
 import { TouchableOpacity, Text } from 'react-native';
+import { ConfirmationDialogProvider } from '@/src/components/ConfirmationDialog';
 
 export default function RootLayout() {
 
@@ -10,6 +11,7 @@ export default function RootLayout() {
 
   return (
     <DictionaryProvider>
+      <ConfirmationDialogProvider>
       <Stack>
         <Stack.Screen name="index" options={{
           title: "ChatBot",
@@ -25,6 +27,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
+      </ConfirmationDialogProvider>
     </DictionaryProvider>
 
   );
