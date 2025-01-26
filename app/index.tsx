@@ -2,13 +2,16 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 
 import { useDictionary } from '@/src/context/DictionaryContext';
 import ChatUI from '@/src/components/ChatUI';
+import CSVUploader from '@/src/components/CSVUploader';
 
 export default function Index() {
 
     const {dictionary, setDictionary} = useDictionary();
 
 
-    return <ChatUI />;
+    // return <ChatUI />;
+
+    return <CSVUploader />
 
     return (
         <View style={[styles.container, { backgroundColor: 'white' }]}>

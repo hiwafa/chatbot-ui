@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import {
   View,
   Text,
+  Image,
   FlatList,
   StyleSheet,
   Dimensions,
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ChatUI = () => {
   const [messages, setMessages] = useState([
@@ -46,24 +49,35 @@ const ChatUI = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={messages}
-        renderItem={renderMessage}
-        keyExtractor={(_, index) => index.toString()}
-        contentContainerStyle={styles.listContent}
-      />
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Type a message..."
-          value={newMessage}
-          onChangeText={setNewMessage}
+      <LinearGradient
+        // Button Linear Gradient
+        colors={['#141e3a', '#141e3a', '#07426f']}
+        style={{ width: 90, elevation: 3, alignItems: 'center', justifyContent: 'space-between' }}>
+        <Image
+          style={{ width: 80, height: 80, marginTop: 20, borderRadius: 40 }}
+          source={require('@/assets/images/chatbotlogo.png')}
         />
-        <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
-          <Text style={styles.sendButtonText}>Send</Text>
-        </TouchableOpacity>
-      </View>
-
+        <Ionicons name={'settings'} color='#48ffa4' size={35} style={{marginBottom: 15}}/>
+      </LinearGradient>
+      <LinearGradient colors={['#07426f', '#141e3a', '#141e3a']} style={{ flex: 1 }}>
+        <FlatList
+          data={messages}
+          renderItem={renderMessage}
+          keyExtractor={(_, index) => index.toString()}
+          contentContainerStyle={styles.listContent}
+        />
+        <LinearGradient colors={['#07426f', '#141e3a', '#141e3a']} style={styles.inputContainer}>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Type a message..."
+            value={newMessage}
+            onChangeText={setNewMessage}
+          />
+          <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+            <Text style={styles.sendButtonText}>Send</Text>
+          </TouchableOpacity>
+        </LinearGradient>
+      </LinearGradient>
     </View>
   );
 };
@@ -71,7 +85,7 @@ const ChatUI = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    flexDirection: 'row',
   },
   listContent: {
     flexGrow: 1,
@@ -98,27 +112,21 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    // borderTopWidth: 1,
-    // borderTopColor: "#ccc",
     padding: 10,
-    // backgroundColor: "#fff",
-
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 50,
-    marginHorizontal: 10,
-    marginBottom: 20,
+    paddingLeft: 15,
+    // borderWidth: 1,
+    // borderColor: "#141e3a",
+    // borderRadius: 40,
+    borderTopRightRadius: 30,
     backgroundColor: "#f9f9f9",
   },
   textInput: {
     flex: 1,
     height: 40,
-    // borderWidth: 1,
-    // borderColor: "#ccc",
-    // borderRadius: 20,
-    paddingHorizontal: 15,
     fontSize: 16,
-    // backgroundColor: "#f9f9f9",
+    color: '#ffffff',
+    borderWidth: 0,
+    outlineStyle: 'none',
   },
   sendButton: {
     marginLeft: 10,

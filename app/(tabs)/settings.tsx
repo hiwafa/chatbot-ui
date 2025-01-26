@@ -58,18 +58,6 @@ export default function App() {
   const updateUser = async () => {
     try {
 
-      console.log("user_db_id: ", currentUserDBId)
-      // const queryParams = new URLSearchParams({
-      //   _id: currentUserDBId ? currentUserDBId : "",
-      //   user_id: userId,
-      //   user_role: selectedRole,
-      //   user_first_name: userFirstName,
-      //   user_last_name: userLastName,
-      //   user_about: userAbout,
-      //   user_image: userImage,
-      //   user_date_of_birth: userDateOfBirth,
-      // }).toString();
-  
       const response = await axios.put(`${apiUrl}/edit_user`, {
         _id: currentUserDBId ? currentUserDBId : "",
         user_id: userId,
@@ -144,7 +132,10 @@ export default function App() {
       <View style={styles.userDetails}>
         <Text style={styles.userName}>{item.user_first_name} {item.user_last_name}</Text>
         <Text style={styles.userInfo}>{item.user_about}</Text>
-        <Text style={styles.userInfo}>Born: {item.user_date_of_birth}</Text>
+        <View style={{ flexDirection: 'row' }}>
+          <Text style={styles.userInfo}>Born: {item.user_date_of_birth}</Text>
+          <Text style={[styles.userInfo, {marginLeft: 10}]}>Role: {item.user_role}</Text>
+        </View>
       </View>
       <View style={styles.actions}>
         <TouchableOpacity onPress={() => editUser(item)} style={styles.actionButton}>

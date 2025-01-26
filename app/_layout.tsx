@@ -12,9 +12,11 @@ export default function RootLayout() {
   return (
     <DictionaryProvider>
       <ConfirmationDialogProvider>
-      <Stack>
+      <Stack screenOptions={{headerShown: false}}>
         <Stack.Screen name="index" options={{
           title: "ChatBot",
+          headerStyle: {backgroundColor: '#07426f'},
+          headerTintColor: '#fff',
           headerRight: () => <TouchableOpacity onPress={() => { router.push('/dictionary') }} >
             <Text style={{
               alignItems: 'center',
