@@ -9,9 +9,7 @@ export default function Index() {
     const {dictionary, setDictionary} = useDictionary();
 
 
-    // return <ChatUI />;
-
-    return <CSVUploader />
+    return <ChatUI />;
 
     return (
         <View style={[styles.container, { backgroundColor: 'white' }]}>
