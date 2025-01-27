@@ -16,6 +16,7 @@ export default function RootLayout() {
         },
         headerShadowVisible: false,
         headerTintColor: '#48ffa4',
+        headerShown: false
         
         }}>
             <Stack.Screen name="index" options={{title: 'Dictionary'}} />

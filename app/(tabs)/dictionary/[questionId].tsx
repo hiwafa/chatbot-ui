@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Alert, TextInput, Modal } from 'react-native';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const apiUrl = "http://127.0.0.1:8000";
 
@@ -85,31 +85,24 @@ const AnswerList = () => {
   }
 
   const renderItem = ({ item }) => (
-    <LinearGradient
-      style={styles.answerItem}
-      colors={['#141e3a', '#07426f', '#07426f']}>
+    <View
+      style={styles.answerItem}>
       <Text style={styles.answerText}>{item}</Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={[styles.button, styles.editButton]}
-          onPress={() => handleEdit(item)}
-        >
-          <Text style={styles.buttonText}>Edit</Text>
+        <TouchableOpacity style={[styles.button]} onPress={() => handleEdit(item)}>
+          <MaterialIcons name="edit" size={24} color="#48ffa4" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.deleteButton]}
-          onPress={() => handleDelete(item)}
-        >
-          <Text style={styles.buttonText}>Delete</Text>
+        <TouchableOpacity style={[styles.button]} onPress={() => handleDelete(item)}>
+          <MaterialIcons name="delete" size={24} color="orange" />
         </TouchableOpacity>
       </View>
-    </LinearGradient>
+    </View>
   );
 
   return (
     <LinearGradient
       style={styles.container}
-      colors={['#07426f', '#141e3a', '#07426f']}>
+      colors={['#141e3a', '#07426f', '#141e3a']}>
       <Modal visible={isModalVisible} animationType="slide" transparent={true}>
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
@@ -131,20 +124,20 @@ const AnswerList = () => {
 
       <View style={styles.inputContainer}>
         <TextInput
-          style={{ padding: 10, flex: 1, color: '#48ffa4' }}
+          style={{ padding: 10, flex: 1, outlineStyle: 'none', color: '#48ffa4' }}
           placeholder="Type Answer"
           value={newAnswer}
           onChangeText={setNewAnswer}
         />
         <TouchableOpacity style={{
-          backgroundColor: '#28a745',
+          backgroundColor: '#07426f',
           marginHorizontal: 5,
           borderRadius: 5,
           elevation: 3,
           padding: 5,
           alignSelf: 'center'
         }} onPress={handleAddNewAnswer}>
-          <Text style={styles.buttonText}>+ Add new answer</Text>
+          <Text style={{ color: '#48ffa4' }}>+ Add new answer</Text>
         </TouchableOpacity>
       </View>
 
@@ -186,11 +179,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#f8f9fa',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#48ffa4',
     padding: 15,
     marginBottom: 10,
-    borderRadius: 5,
-    elevation: 1, // Android shadow
+    elevation: 1,
   },
   answerText: {
     fontSize: 16,
@@ -201,10 +194,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   button: {
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    marginLeft: 5,
+    marginLeft: 5
   },
   modalButton: {
     backgroundColor: '#007bff',
@@ -214,14 +204,8 @@ const styles = StyleSheet.create({
     elevation: 3, // For Android shadow effect
     margin: 5
   },
-  editButton: {
-    backgroundColor: '#007bff',
-  },
-  deleteButton: {
-    backgroundColor: 'orange',
-  },
   buttonText: {
-    color: 'white',
+    color: '#48ffa4',
     fontSize: 14,
     textAlign: 'center'
   },

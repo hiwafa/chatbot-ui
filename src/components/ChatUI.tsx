@@ -15,11 +15,13 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from 'expo-linear-gradient';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import axios from "axios";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 
 const ChatUI = () => {
 
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const [messages, setMessages] = useState([
     { userId: 2, message: "Hallo, wie kann ich dir helfen?" },
@@ -43,8 +45,11 @@ const ChatUI = () => {
         ]);
 
     } catch (error) {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { userId: 2, message: "Sorry, Für diese Frage gibt es keine Antwort" },
+      ]);
       console.error('Error fetching question:', error);
-      throw error;
     }
   }
 
@@ -92,9 +97,8 @@ const ChatUI = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, Platform.OS === 'ios' ? {marginTop: insets.top, marginBottom: insets.bottom} : {}]}>
       <LinearGradient
-        // Button Linear Gradient
         colors={['#141e3a', '#07426f', '#141e3a']}
         style={{ width: 90, elevation: 3, alignItems: 'center', justifyContent: 'space-between', borderTopRightRadius: 40, borderBottomRightRadius: 40 }}>
         <View style={{
@@ -128,9 +132,14 @@ const ChatUI = () => {
           </TouchableOpacity>
         </View>
         <View style={{ marginBottom: 20, gap: 10, alignItems: 'center' }}>
-          <Image
-            style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 1, borderColor: '#48ffa4' }}
-            source={require('@/assets/images/boy.png')} />
+
+
+          <TouchableOpacity onPress={() => router.navigate("/settings")}>
+            <Image
+              style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 1, borderColor: '#48ffa4' }}
+              source={require('@/assets/images/boy.png')} />
+          </TouchableOpacity>
+
           <AntDesign name="login" size={30} color="#48ffa4" />
         </View>
 

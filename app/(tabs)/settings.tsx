@@ -3,6 +3,9 @@ import { View, Text, TextInput, Button, FlatList, Image, StyleSheet, TouchableOp
 import { RadioButton } from 'react-native-paper';
 import axios from 'axios';
 import { useConfirmationDialog } from '@/src/components/ConfirmationDialog';
+import { LinearGradient } from 'expo-linear-gradient';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 const apiUrl = "http://127.0.0.1:8000";
 
@@ -134,24 +137,25 @@ export default function App() {
         <Text style={styles.userInfo}>{item.user_about}</Text>
         <View style={{ flexDirection: 'row' }}>
           <Text style={styles.userInfo}>Born: {item.user_date_of_birth}</Text>
-          <Text style={[styles.userInfo, {marginLeft: 10}]}>Role: {item.user_role}</Text>
+          <Text style={[styles.userInfo, { marginLeft: 10 }]}>Role: {item.user_role}</Text>
         </View>
       </View>
       <View style={styles.actions}>
         <TouchableOpacity onPress={() => editUser(item)} style={styles.actionButton}>
-          <Text style={styles.actionText}>Edit</Text>
+          <FontAwesome5 name="user-edit" size={24} color="#48ffa4" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => deleteUser(item.user_id)} style={styles.actionButton}>
-          <Text style={styles.actionText}>Delete</Text>
+          <MaterialIcons name="delete" size={28} color="orange" />
         </TouchableOpacity>
       </View>
     </View>
   );
 
   return (
-    <View style={styles.container}>
-
-      <TouchableOpacity style={[styles.button, { backgroundColor: '#28a745', maxWidth: 150, paddingHorizontal: 10, marginRight: 5, alignSelf: 'flex-end' }]}
+    <LinearGradient
+      style={styles.container}
+      colors={['#141e3a', '#07426f', '#141e3a']}>
+      <TouchableOpacity style={[styles.button, { backgroundColor: '#07426f', maxWidth: 150, paddingHorizontal: 10, marginRight: 5, alignSelf: 'flex-end' }]}
         onPress={() => {
           setIsModalVisible(true);
           emptyModalTextFields();
@@ -174,24 +178,24 @@ export default function App() {
           setCurrentUserDBId(null);
         }}
       >
-        {/* <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}> */}
+        {/* <View style={styles.modalContainer}> */}
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
+          <LinearGradient colors={['#07426f', '#141e3a', '#07426f']} style={styles.modalContent}>
             <Text style={styles.modalTitle}>Add New User</Text>
             <RadioButton.Group onValueChange={newValue => setSelectedRole(newValue)} value={selectedRole}>
               <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                <Text style={{ fontWeight: 'bold' }}>User Role:</Text>
+                <Text style={{ fontWeight: 'bold', color: '#48ffa4' }}>Role:</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <RadioButton value="manager" />
-                  <Text>Manager</Text>
+                  <Text style={{ color: '#48ffa4' }}>Manager</Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <RadioButton value="editor" />
-                  <Text>Editor</Text>
+                  <Text style={{ color: '#48ffa4' }}>Editor</Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <RadioButton value="viewer" />
-                  <Text>Viewer</Text>
+                  <Text style={{ color: '#48ffa4' }}>Viewer</Text>
                 </View>
               </View>
             </RadioButton.Group>
@@ -232,17 +236,21 @@ export default function App() {
               onChangeText={setUserDateOfBirth}  // Ensure this is updating the state
             />
             <View style={styles.modalButtons}>
-              <Button title={currentUserDBId ? "Update User" : "+ Add User"} onPress={currentUserDBId ? updateUser : addUser} />
-              <Button title="Cancel" onPress={() => {
+              <TouchableOpacity onPress={currentUserDBId ? updateUser : addUser}>
+                <Text style={{ color: '#48ffa4', fontWeight: 'bold' }}>{currentUserDBId ? "Update User" : "+ Add User"}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => {
                 setIsModalVisible(false);
                 setCurrentUserDBId(null);
-              }} />
+              }}>
+                <Text style={{ color: '#48ffa4', fontWeight: 'bold' }}>Cancel</Text>
+              </TouchableOpacity>
             </View>
-          </View>
+          </LinearGradient>
         </View>
         {/* </TouchableWithoutFeedback> */}
       </Modal>
-    </View>
+    </LinearGradient>
   );
 }
 
@@ -255,9 +263,7 @@ const styles = StyleSheet.create({
   },
   userCard: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
     padding: 15,
-    borderRadius: 10,
     marginVertical: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -278,35 +284,25 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#48ffa4',
   },
   userInfo: {
     fontSize: 14,
-    color: '#666',
+    color: '#48ffee',
   },
   actions: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'row'
   },
   actionButton: {
-    marginLeft: 10,
-    padding: 8,
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
-  },
-  actionText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    marginLeft: 5
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    width: '80%',
-    backgroundColor: '#fff',
+    width: '85%',
     padding: 20,
     borderRadius: 10,
     shadowColor: '#000',
@@ -320,16 +316,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: '#48ffa4'
   },
   input: {
     height: 40,
-    borderColor: '#ccc',
+    borderColor: '#48ffa4',
     borderWidth: 1,
     borderRadius: 5,
     marginBottom: 10,
     paddingLeft: 10,
+    color: '#48ffa4',
   },
   modalButtons: {
+    marginTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -337,12 +336,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#007bff',
     paddingVertical: 12,
     paddingHorizontal: 30,
-    borderRadius: 5,
+    borderRadius: 15,
     elevation: 3, // For Android shadow effect
     margin: 5
   },
   buttonText: {
-    color: 'white',
+    color: '#48ffa4',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',

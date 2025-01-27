@@ -1,22 +1,27 @@
-import { Text, View, StyleSheet, Button, SafeAreaView, StatusBar } from 'react-native';
+import { Text, View, StyleSheet, Button, StatusBar } from 'react-native';
 
 import { useDictionary } from '@/src/context/DictionaryContext';
 import ChatUI from '@/src/components/ChatUI';
 import CSVUploader from '@/src/components/CSVUploader';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Index() {
 
     const { dictionary, setDictionary } = useDictionary();
+    
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <LinearGradient
+            style={{ flex: 1 }}
+            colors={['#07426f', '#07426f', '#141e3a']}>
             <StatusBar
                 animated={true}
                 backgroundColor="#141e3a"
-                barStyle= 'light-content'
+                barStyle='light-content'
             />
             <ChatUI />
-        </SafeAreaView>
+        </LinearGradient>
+
     );
     return <ChatUI />;
 
