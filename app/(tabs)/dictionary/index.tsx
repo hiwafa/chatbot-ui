@@ -153,7 +153,7 @@ const App = () => {
             />
             <View style={styles.inputContainer}>
               <TextInput
-                style={{ padding: 10, flex: 1, color: '#48ffa4' }}
+                style={{ padding: 10, flex: 1, color: '#48ffa4', outlineStyle: 'none' }}
                 placeholder="Enter answer"
                 value={newAnswer}
                 onChangeText={setNewAnswer}
@@ -289,7 +289,8 @@ const styles = StyleSheet.create({
     borderColor: "#48ffa4",
     marginBottom: 10,
     padding: 10,
-    color: '#48ffa4'
+    color: '#48ffa4',
+    outlineStyle: 'none',
   },
   inputContainer: {
     borderWidth: 1,

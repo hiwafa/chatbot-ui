@@ -326,6 +326,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingLeft: 10,
     color: '#48ffa4',
+    outlineStyle: 'none'
   },
   modalButtons: {
     marginTop: 10,

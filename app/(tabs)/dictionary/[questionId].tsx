@@ -105,20 +105,23 @@ const AnswerList = () => {
       colors={['#141e3a', '#07426f', '#141e3a']}>
       <Modal visible={isModalVisible} animationType="slide" transparent={true}>
         <View style={styles.modalBackground}>
-          <View style={styles.modalContainer}>
+          <LinearGradient colors={['#07426f', '#141e3a', '#07426f']} style={styles.modalContainer}>
             <TextInput
               style={styles.input}
               placeholder="Enter new answer text"
               value={updatedAnserText}
               onChangeText={text => setUpdatedAnswerText(text)}
             />
-            <TouchableOpacity style={styles.modalButton} onPress={handleSave}>
-              <Text style={styles.buttonText}>Save Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.modalButton} onPress={() => setIsModalVisible(false)}>
-              <Text style={styles.buttonText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+              <TouchableOpacity onPress={handleSave}>
+                <Text style={styles.buttonText}>Save Edited Answer</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </LinearGradient>
         </View>
       </Modal>
 
@@ -207,7 +210,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#48ffa4',
     fontSize: 14,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight: 'bold'
   },
   modalBackground: {
     flex: 1,
@@ -223,9 +227,11 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#48ffa4",
     marginBottom: 10,
-    padding: 10
+    padding: 10,
+    color: '#48ffa4',
+    outlineStyle: 'none'
   }
 });
 
