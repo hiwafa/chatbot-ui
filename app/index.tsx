@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, SafeAreaView, StatusBar } from 'react-native';
 
 import { useDictionary } from '@/src/context/DictionaryContext';
 import ChatUI from '@/src/components/ChatUI';
@@ -6,15 +6,24 @@ import CSVUploader from '@/src/components/CSVUploader';
 
 export default function Index() {
 
-    const {dictionary, setDictionary} = useDictionary();
+    const { dictionary, setDictionary } = useDictionary();
 
-
+    return (
+        <SafeAreaView style={{ flex: 1 }}>
+            <StatusBar
+                animated={true}
+                backgroundColor="#141e3a"
+                barStyle= 'light-content'
+            />
+            <ChatUI />
+        </SafeAreaView>
+    );
     return <ChatUI />;
 
     return (
         <View style={[styles.container, { backgroundColor: 'white' }]}>
             <Text>{dictionary.questions['Hi, how is it going']}</Text>
-            <Button title='Click Me' onPress={()=> {
+            <Button title='Click Me' onPress={() => {
                 setDictionary({
                     questions: {
                         "Hi, how is it going": "Hi danke es geht mir gut"
@@ -22,7 +31,7 @@ export default function Index() {
                 })
             }} />
 
-            
+
         </View>
     );
 }
@@ -30,7 +39,14 @@ export default function Index() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         justifyContent: 'center',
-    }
+        backgroundColor: '#ECF0F1',
+    },
+    buttonsContainer: {
+        padding: 10,
+    },
+    textStyle: {
+        textAlign: 'center',
+        marginBottom: 8,
+    },
 });

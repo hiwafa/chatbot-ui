@@ -9,9 +9,17 @@ export default function RootLayout() {
     const router = useRouter();
 
     return (
-        <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="index" />
-            <Stack.Screen name="[questionId]"  />
+        <Stack screenOptions={{
+            
+        headerStyle: {
+          backgroundColor: '#141e3a',
+        },
+        headerShadowVisible: false,
+        headerTintColor: '#48ffa4',
+        
+        }}>
+            <Stack.Screen name="index" options={{title: 'Dictionary'}} />
+            <Stack.Screen name="[questionId]"  options={{title: 'Answers'}} />
         </Stack>
     );
 }

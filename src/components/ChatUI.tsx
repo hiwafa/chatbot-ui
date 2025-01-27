@@ -76,7 +76,7 @@ const ChatUI = () => {
           style={[
             styles.messageContainer,
             isUser1 ? styles.leftMessage : styles.rightMessage,
-            { maxWidth: screenWidth * 0.7 },
+            { maxWidth: screenWidth * 0.55 },
           ]}
         >
           <Text style={styles.messageText}>{item.message}</Text>
@@ -95,7 +95,7 @@ const ChatUI = () => {
     <View style={styles.container}>
       <LinearGradient
         // Button Linear Gradient
-        colors={['#141e3a', '#141e3a', '#141e3a']}
+        colors={['#141e3a', '#07426f', '#141e3a']}
         style={{ width: 90, elevation: 3, alignItems: 'center', justifyContent: 'space-between', borderTopRightRadius: 40, borderBottomRightRadius: 40 }}>
         <View style={{
           width: 70, height: 70,
@@ -120,7 +120,7 @@ const ChatUI = () => {
           }),
         }}>
           <Image
-            style={{ width: '100%', height: '100%', borderRadius: '50%' }}
+            style={{ width: '100%', height: '100%' }}
             source={require('@/assets/images/chatbotlogo.png')}
           />
           <TouchableOpacity onPress={() => router.navigate("/dictionary")}>
@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginVertical: 5,
+    // width: '75%'
   },
   leftMessage: {
     // alignSelf: "flex-start",

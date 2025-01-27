@@ -12,23 +12,25 @@ export default function RootLayout() {
   return (
     <DictionaryProvider>
       <ConfirmationDialogProvider>
-      <Stack screenOptions={{headerShown: false}}>
-        <Stack.Screen name="index" options={{
-          title: "ChatBot",
-          headerStyle: {backgroundColor: '#07426f'},
-          headerTintColor: '#fff',
-          headerRight: () => <TouchableOpacity onPress={() => { router.push('/dictionary') }} >
-            <Text style={{
-              alignItems: 'center',
-              fontWeight: 'bold',
-              color: 'green',
-              padding: 10,
-            }}>Setting</Text>
-          </TouchableOpacity>
-        }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="index" options={{
+            // title: "ChatBot",
+            // headerStyle: {backgroundColor: '#07426f'},
+            // headerTintColor: '#fff',
+            // headerRight: () => (
+            //   <TouchableOpacity onPress={() => { router.push('/dictionary') }} >
+            //     <Text style={{
+            //       alignItems: 'center',
+            //       fontWeight: 'bold',
+            //       color: 'green',
+            //       padding: 10,
+            //     }}>Setting</Text>
+            //   </TouchableOpacity>
+            // )
+          }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
       </ConfirmationDialogProvider>
     </DictionaryProvider>
 

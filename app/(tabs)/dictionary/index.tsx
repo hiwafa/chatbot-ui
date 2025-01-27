@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, Button, TextInput, StyleSheet, Alert, Modal, TouchableOpacity } from "react-native";
 import { useRouter } from 'expo-router';
 import axios from "axios";
+import { LinearGradient } from "expo-linear-gradient";
 
 const apiUrl = "http://127.0.0.1:8000"; // Replace with your local IP address
 
@@ -90,9 +91,12 @@ const App = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <LinearGradient
+      style={styles.container}
+      colors={['#07426f', '#141e3a', '#07426f']}>
 
-      <TouchableOpacity style={[styles.button, { backgroundColor: '#28a745', maxWidth: 150, paddingHorizontal: 10, margin: 0, marginBottom: 20, alignSelf: 'flex-end'}]} onPress={() => setIsModalVisible(true)}>
+
+      <TouchableOpacity style={[styles.button, { backgroundColor: '#28a745', maxWidth: 150, paddingHorizontal: 10, margin: 0, marginBottom: 20, alignSelf: 'flex-end' }]} onPress={() => setIsModalVisible(true)}>
         <Text style={styles.buttonText}>+ Add Question</Text>
       </TouchableOpacity>
 
@@ -168,8 +172,8 @@ const App = () => {
         data={questions}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.questionContainer} onPress={()=>{
-            router.navigate(`/dictionary/${item._id}`); 
+          <TouchableOpacity style={styles.questionContainer} onPress={() => {
+            router.navigate(`/dictionary/${item._id}`);
           }}>
             <Text style={styles.questionText}>{item.question_text}</Text>
             <View style={styles.actions}>
@@ -179,7 +183,7 @@ const App = () => {
           </TouchableOpacity>
         )}
       />
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -194,12 +198,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 10,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#48ffa4',
     paddingBottom: 10,
   },
   questionText: {
     fontSize: 18,
     flex: 1,
+    color: '#48ffa4'
   },
   actions: {
     flexDirection: "row",

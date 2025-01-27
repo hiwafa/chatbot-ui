@@ -10,16 +10,18 @@ export default function TabLayout() {
   return (
     <Tabs
     screenOptions={{
-        tabBarActiveTintColor: '#ffd33d',
+        tabBarActiveTintColor: '#48ffa4',
         headerStyle: {
           // backgroundColor: '#25292e',
         },
         headerShadowVisible: false,
         // headerTintColor: '#fff',
         tabBarStyle: {
-        // backgroundColor: '#25292e',
+        backgroundColor: '#141e3a',
+        borderColor: '#141e3a',
           display: path_name.startsWith('/dictionary/') && !path_name.endsWith('undefined') && path_name.length > 21 ? 'none' : 'flex'
         },
+        headerShown: false
       }}
     >
       <Tabs.Screen

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Alert, TextInput, Modal } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import axios from 'axios';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 const apiUrl = "http://127.0.0.1:8000";
@@ -84,7 +85,9 @@ const AnswerList = () => {
   }
 
   const renderItem = ({ item }) => (
-    <View style={styles.answerItem}>
+    <LinearGradient
+      style={styles.answerItem}
+      colors={['#141e3a', '#07426f', '#07426f']}>
       <Text style={styles.answerText}>{item}</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -100,12 +103,13 @@ const AnswerList = () => {
           <Text style={styles.buttonText}>Delete</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </LinearGradient>
   );
 
   return (
-    <View style={styles.container}>
-
+    <LinearGradient
+      style={styles.container}
+      colors={['#07426f', '#141e3a', '#07426f']}>
       <Modal visible={isModalVisible} animationType="slide" transparent={true}>
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
@@ -127,7 +131,7 @@ const AnswerList = () => {
 
       <View style={styles.inputContainer}>
         <TextInput
-          style={{ padding: 10, flex: 1 }}
+          style={{ padding: 10, flex: 1, color: '#48ffa4' }}
           placeholder="Type Answer"
           value={newAnswer}
           onChangeText={setNewAnswer}
@@ -149,14 +153,14 @@ const AnswerList = () => {
         renderItem={renderItem}
         keyExtractor={(item) => item}
       />
-    </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
   inputContainer: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#48ffa4",
     marginBottom: 10,
     flexDirection: 'row',
     borderRadius: 5
@@ -191,6 +195,7 @@ const styles = StyleSheet.create({
   answerText: {
     fontSize: 16,
     flex: 1,
+    color: '#48ffa4'
   },
   buttonContainer: {
     flexDirection: 'row',
