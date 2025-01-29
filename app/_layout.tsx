@@ -1,8 +1,7 @@
 import React from 'react';
 import { DictionaryProvider } from "@/src/context/DictionaryContext";
-
+import { Text } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { TouchableOpacity, Text } from 'react-native';
 import { ConfirmationDialogProvider } from '@/src/components/ConfirmationDialog';
 
 export default function RootLayout() {
@@ -14,7 +13,7 @@ export default function RootLayout() {
       <ConfirmationDialogProvider>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" options={{
-            // title: "ChatBot",
+            title: "Home",
             // headerStyle: {backgroundColor: '#07426f'},
             // headerTintColor: '#fff',
             // headerRight: () => (
@@ -29,6 +28,15 @@ export default function RootLayout() {
             // )
           }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="game" options={{
+            headerTitle: "",
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#141e3a',
+            },
+            headerTintColor: '#48ffa4',
+            headerShadowVisible: false,
+          }} />
           <Stack.Screen name="+not-found" />
         </Stack>
       </ConfirmationDialogProvider>

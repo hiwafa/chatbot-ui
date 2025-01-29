@@ -13,6 +13,7 @@ import {
 import { useRouter } from "expo-router";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { LinearGradient } from 'expo-linear-gradient';
+import Entypo from '@expo/vector-icons/Entypo';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import axios from "axios";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -97,7 +98,7 @@ const ChatUI = () => {
   };
 
   return (
-    <View style={[styles.container, Platform.OS === 'ios' ? {marginTop: insets.top, marginBottom: insets.bottom} : {}]}>
+    <View style={[styles.container, Platform.OS === 'ios' ? { marginTop: insets.top, marginBottom: insets.bottom } : {}]}>
       <LinearGradient
         colors={['#141e3a', '#07426f', '#141e3a']}
         style={{ width: 90, elevation: 3, alignItems: 'center', justifyContent: 'space-between', borderTopRightRadius: 40, borderBottomRightRadius: 40 }}>
@@ -129,6 +130,9 @@ const ChatUI = () => {
           />
           <TouchableOpacity onPress={() => router.navigate("/dictionary")}>
             <MaterialCommunityIcons name="database-settings" size={35} color="#48ffa4" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.navigate("/game")}>
+            <Entypo name="game-controller" size={30} color="#48ffa4" />
           </TouchableOpacity>
         </View>
         <View style={{ marginBottom: 20, gap: 10, alignItems: 'center' }}>

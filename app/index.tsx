@@ -4,11 +4,13 @@ import { useDictionary } from '@/src/context/DictionaryContext';
 import ChatUI from '@/src/components/ChatUI';
 import CSVUploader from '@/src/components/CSVUploader';
 import { LinearGradient } from 'expo-linear-gradient';
+import ChatBotGame from '@/src/components/ChatBotGame';
 
 export default function Index() {
 
     const { dictionary, setDictionary } = useDictionary();
     
+    // return <ChatBotGame />
 
     return (
         <LinearGradient
