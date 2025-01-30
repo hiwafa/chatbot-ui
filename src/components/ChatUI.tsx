@@ -9,9 +9,10 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  Modal,
 } from "react-native";
 import { useRouter } from "expo-router";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { LinearGradient } from 'expo-linear-gradient';
 import Entypo from '@expo/vector-icons/Entypo';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -27,7 +28,9 @@ const ChatUI = () => {
   const [messages, setMessages] = useState([
     { userId: 2, message: "Hallo, wie kann ich dir helfen?" },
   ]);
+
   const [newMessage, setNewMessage] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const screenWidth = Dimensions.get("window").width;
 
@@ -99,12 +102,30 @@ const ChatUI = () => {
 
   return (
     <View style={[styles.container, Platform.OS === 'ios' ? { marginTop: insets.top, marginBottom: insets.bottom } : {}]}>
-      <LinearGradient
-        colors={['#141e3a', '#07426f', '#141e3a']}
-        style={{ width: 90, elevation: 3, alignItems: 'center', justifyContent: 'space-between', borderTopRightRadius: 40, borderBottomRightRadius: 40 }}>
+
+      <Modal visible={isModalVisible} animationType="slide" transparent={true}>
+        <View style={styles.modalBackground}>
+          <LinearGradient colors={['#07426f', '#07426f', '#141e3a']} style={styles.modalContainer}>
+
+            <TouchableOpacity onPress={() => setIsModalVisible(false)} style={{position: 'absolute', top: 10, right: 10}}>
+              <FontAwesome name="close" size={24} color="#48ffa4" />
+            </TouchableOpacity>
+
+            <Text style={{ color: '#48ffa4', fontWeight: 'bold', marginTop: 20, alignSelf: 'center' }}>I am chatbot. I answer your answer</Text>
+
+          </LinearGradient>
+        </View>
+      </Modal>
+
+      <LinearGradient colors={['#141e3a', '#07426f', '#141e3a']}
+        style={{
+          width: 70, elevation: 3, alignItems: 'center',
+          justifyContent: 'space-between', borderTopRightRadius: 40, borderBottomRightRadius: 40
+        }}>
+
         <View style={{
-          width: 70, height: 70,
-          borderRadius: 35,
+          width: 50, height: 50,
+          borderRadius: 25,
           marginTop: 10,
           alignItems: 'center',
           gap: 20,
@@ -124,27 +145,30 @@ const ChatUI = () => {
             },
           }),
         }}>
-          <Image
-            style={{ width: '100%', height: '100%' }}
-            source={require('@/assets/images/chatbotlogo.png')}
-          />
+
+          <TouchableOpacity style={{ width: '100%', height: '100%' }} onPress={() => { setIsModalVisible(true) }}>
+            <Image style={{ width: '100%', height: '100%' }}
+              source={require('@/assets/images/chatbotlogo.png')}
+            />
+          </TouchableOpacity>
+
           <TouchableOpacity onPress={() => router.navigate("/dictionary")}>
             <MaterialCommunityIcons name="database-settings" size={35} color="#48ffa4" />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => router.navigate("/game")}>
             <Entypo name="game-controller" size={30} color="#48ffa4" />
           </TouchableOpacity>
+
         </View>
         <View style={{ marginBottom: 20, gap: 10, alignItems: 'center' }}>
 
-
           <TouchableOpacity onPress={() => router.navigate("/settings")}>
-            <Image
-              style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 1, borderColor: '#48ffa4' }}
+            <Image style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 1, borderColor: '#48ffa4' }}
               source={require('@/assets/images/boy.png')} />
           </TouchableOpacity>
 
-          <AntDesign name="login" size={30} color="#48ffa4" />
+          <View style={{ height: 30 }} />
+
         </View>
 
       </LinearGradient>
@@ -229,6 +253,18 @@ const styles = StyleSheet.create({
     color: "#48ffa4",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContainer: {
+    padding: 20,
+    minHeight: 200,
+    width: "80%",
+    maxWidth: 700,
+    borderRadius: 10,
   },
 });
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, ScrollView, Platform } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
-import validateCSVString from '@/src/utils/csv_validator';
 import Papa from 'papaparse';
 import axios from "axios";
 import { useConfirmationDialog } from './ConfirmationDialog';
@@ -11,7 +10,7 @@ const apiUrl = "http://127.0.0.1:8000";
 export default function CSVUploader() {
 
   const confirmDialog = useConfirmationDialog();
-  
+
   const [csvData, setCsvData] = useState([]);
   const [headers, setHeaders] = useState([]);
   const [questions, setQuestions] = useState([]);
@@ -51,7 +50,7 @@ export default function CSVUploader() {
       delimiter: ',', // Make sure the delimiter is correctly set
       quoteChar: '"', // Handle quoted fields with commas inside them
     });
-    
+
   };
 
   // Function to handle file upload
@@ -69,7 +68,7 @@ export default function CSVUploader() {
       } else {
         const response = await fetch(result.uri);
         const fileContent = await response.text();
-        
+
         parseCSV(fileContent);
       }
 
@@ -87,7 +86,7 @@ export default function CSVUploader() {
         cancelText: 'Not Sure',
       });
 
-      if(!(questions.length > 0) || result === false) return;
+      if (!(questions.length > 0) || result === false) return;
 
       const formatedQuestions = convertDataFormat(questions);
 
@@ -96,13 +95,12 @@ export default function CSVUploader() {
           "Content-Type": "application/json", // Specify the content type
         },
       });
-  
+
       console.log("Successfully posted questions:", response.data);
       return response.data; // Return the server's response
 
     } catch (error) {
       console.error("Error posting questions to FastAPI:", error.response?.data || error.message);
-      throw error; // Re-throw the error for further handling
     }
   }
 
@@ -116,20 +114,10 @@ export default function CSVUploader() {
   return (
     <View style={styles.container}>
 
-      <View style={{ flexDirection: 'row', gap: 10, justifyContent: "flex-end" }}>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#28a745', maxWidth: 150, paddingHorizontal: 10, margin: 0, marginBottom: 20, alignSelf: 'flex-end' }]} onPress={uploadCSV}>
-          <Text style={styles.buttonText}>+ Upload CSV</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, { backgroundColor: '#28a745', maxWidth: 150, paddingHorizontal: 10, margin: 0, marginBottom: 20, alignSelf: 'flex-end' }]}
-        onPress={saveMultipleQuestions}>
-          <Text style={styles.buttonText}>+ Save CSV</Text>
-        </TouchableOpacity>
-      </View>
-
       {csvData.length > 0 ? (
-        <ScrollView horizontal>
+        <ScrollView horizontal contentContainerStyle={{marginBottom: 60, marginTop: 40}}>
           <View>
-            {/* Table Header */}
+
             <View style={styles.row}>
               {headers.map((header, index) => (
                 <Text key={index} style={[styles.cell, styles.headerCell]}>
@@ -138,7 +126,6 @@ export default function CSVUploader() {
               ))}
             </View>
 
-            {/* Table Rows */}
             <FlatList
               data={csvData}
               keyExtractor={(_, index) => index.toString()}
@@ -146,7 +133,7 @@ export default function CSVUploader() {
                 <View style={styles.row}>
                   {item.map((cell, index) => (
                     <Text key={index} style={styles.cell}>
-                      {cell || ''}  {/* Prevent errors from missing fields */}
+                      {cell || ''}
                     </Text>
                   ))}
                 </View>
@@ -157,59 +144,55 @@ export default function CSVUploader() {
       ) : (
         <Text style={styles.placeholderText}>No CSV uploaded yet.</Text>
       )}
+
+
+      <View style={{ flex: 1, flexDirection: 'row', position: 'absolute', right: 0, bottom: 0 }}>
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#07426f' }]} onPress={uploadCSV}>
+          <Text style={styles.buttonText}>+ Upload CSV</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, { backgroundColor: '#07426f' }]}
+          onPress={saveMultipleQuestions}>
+          <Text style={styles.buttonText}>+ Save CSV</Text>
+        </TouchableOpacity>
+      </View>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#f5f5f5',
-  },
-  uploadButton: {
-    backgroundColor: '#007bff',
-    padding: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  uploadButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
+    // flex: 1,
+    minHeight: 100
   },
   row: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
   },
   cell: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#48ffa4',
+    paddingVertical: 5,
     textAlign: 'left',
+    color: '#48ffa4'
   },
   headerCell: {
     fontWeight: 'bold',
-    backgroundColor: '#f0f0f0',
   },
   placeholderText: {
     textAlign: 'center',
-    color: '#888',
+    color: '#48ffa4',
     fontSize: 16,
-    marginTop: 20,
   },
   button: {
-    backgroundColor: '#007bff',
-    paddingVertical: 12,
-    paddingHorizontal: 30,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
     borderRadius: 5,
-    elevation: 3, // For Android shadow effect
+    elevation: 3,
     margin: 5
   },
   buttonText: {
-    color: 'white',
+    color: '#48ffa4',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',

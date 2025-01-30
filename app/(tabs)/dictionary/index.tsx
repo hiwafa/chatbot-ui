@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, Button, TextInput, StyleSheet, Alert, Modal, TouchableOpacity } from "react-native";
-import { useRouter } from 'expo-router';
+import { useNavigation, useRouter } from 'expo-router';
 import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Entypo from '@expo/vector-icons/Entypo';
+import CSVUploader from "@/src/components/CSVUploader";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const apiUrl = "http://127.0.0.1:8000"; // Replace with your local IP address
 
@@ -16,13 +19,15 @@ type Question = {
 const App = () => {
 
   const router = useRouter();
+  const navigation = useNavigation();
 
   const [questions, setQuestions] = useState<Question[]>([]);
   const [editingQuestion, setEditingQuestion] = useState(null);
   const [newQuestionText, setNewQuestionText] = useState("");
   const [newAnswer, setNewAnswer] = useState("");
   const [answers, setAnswers] = useState([]);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isCSVModalVisible, setCSVModalVisible] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [filteredData, setFilteredData] = useState(questions);
 
@@ -58,7 +63,6 @@ const App = () => {
       setFilteredData(response.data);
     } catch (error) {
       console.error(error);
-      Alert.alert("Error", "Failed to load questions.");
     }
   };
 
@@ -103,7 +107,7 @@ const App = () => {
       Alert.alert("Success", "Question added.");
       setNewQuestionText("");
       setAnswers([]);
-      setIsModalVisible(false);
+      setModalVisible(false);
       fetchQuestions();
     } catch (error) {
       console.error(error);
@@ -135,12 +139,26 @@ const App = () => {
         <TouchableOpacity style={[styles.button, {
           backgroundColor: '#07426f', maxWidth: 150,
           paddingHorizontal: 10, marginHorizontal: 5, alignSelf: 'center', padding: 5
-        }]} onPress={() => setIsModalVisible(true)}>
+        }]} onPress={() => setModalVisible(true)}>
           <Text style={{ color: '#48ffa4' }}>+ Add Question</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{ alignSelf: 'center', marginHorizontal: 5 }} onPress={() => { setCSVModalVisible(true) }}>
+          <FontAwesome5 name="file-upload" size={22} color="#48ffa4" />
         </TouchableOpacity>
       </View>
 
-      {/* Modal for Adding a Question */}
+      {/* Modal for csv file upload */}
+      <Modal visible={isCSVModalVisible} animationType="slide" transparent={true}>
+        <View style={styles.modalBackground}>
+          <LinearGradient colors={['#07426f', '#141e3a', '#07426f']} style={styles.modalContainer}>
+            <TouchableOpacity onPress={() => { setCSVModalVisible(false) }} style={{ maxWidth: 30, alignItems: 'center', alignSelf: 'flex-end'}}>
+              <FontAwesome name="close" size={24} color="#48ffa4" />
+            </TouchableOpacity>
+            <CSVUploader />
+          </LinearGradient>
+        </View>
+      </Modal>
+
       <Modal visible={isModalVisible} animationType="slide" transparent={true}>
         <View style={styles.modalBackground}>
           <LinearGradient colors={['#07426f', '#141e3a', '#07426f']} style={styles.modalContainer}>
@@ -181,7 +199,7 @@ const App = () => {
               <TouchableOpacity style={styles.button} onPress={handleAddQuestion}>
                 <Text style={styles.buttonText}>Save Question</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => setIsModalVisible(false)}>
+              <TouchableOpacity style={styles.button} onPress={() => setModalVisible(false)}>
                 <Text style={styles.buttonText}>Cancel</Text>
               </TouchableOpacity>
             </View>
@@ -208,7 +226,7 @@ const App = () => {
               <TouchableOpacity style={styles.button} onPress={() => setEditingQuestion(null)}>
                 <Text style={styles.buttonText}>Cancel</Text>
               </TouchableOpacity>
-              
+
             </View>
           </LinearGradient>
         </View>
@@ -268,11 +286,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    // backgroundColor: 'red'
   },
   modalContainer: {
-    backgroundColor: "white",
-    padding: 20,
+    paddingHorizontal: 10,
     width: "80%",
     borderRadius: 10,
   },
