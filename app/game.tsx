@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import Animated, {
     useSharedValue,
@@ -8,6 +8,7 @@ import Animated, {
     Easing,
 } from 'react-native-reanimated';
 
+
 import { useNavigation } from 'expo-router';
 
 const { height } = Dimensions.get('window');
@@ -15,7 +16,7 @@ const { height } = Dimensions.get('window');
 const questions = [
     {
         question: 'What is 2 + 2?',
-        answers: ['3', '4', '5', '6'],
+        answers: ['3', '4', '5', 'iloveprogramminglanguagesehr'],
         correctAnswer: '4',
     },
     {
@@ -24,13 +25,13 @@ const questions = [
         correctAnswer: 'Paris',
     },
     {
-        question: 'Which planet is closest to the Sun?',
+        question: 'Which planet is closest to the Sun? closest to the Sun?',
         answers: ['Earth', 'Mars', 'Venus', 'Mercury'],
         correctAnswer: 'Mercury',
     },
     {
         question: 'What is the capital of Germany?',
-        answers: ['Berlin', 'Madrid', 'Paris', 'Rome'],
+        answers: ['Berlin', 'Madrid', 'Paris Paris', 'Rome Rome Rome'],
         correctAnswer: 'Berlin',
     },
 ];
@@ -43,22 +44,25 @@ const App = () => {
     const [score, setScore] = useState(0);
     const [isGameOver, setIsGameOver] = useState(false);
     const [isGameStarted, setIsGameStarted] = useState(false);
-    const [speed, setSpeed] = useState(1); // Speed multiplier (1x, 2x, etc.)
+    const [speed, setSpeed] = useState(1);
+    const [currentAnswer, setCurrentAnswer] = useState("");
 
     const currentQuestion = questions[currentQuestionIndex];
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         navigation.setOptions({
-            
+
             headerRight: () => (
                 <View style={{ flexDirection: 'row', gap: 10, marginRight: 10, alignItems: 'center' }}>
-                    <TouchableOpacity style={styles.speedButton} onPress={decreaseSpeed}>
-                        <Text style={{ color: '#141e3a', fontSize: 21, fontWeight: 'bold' }}>-</Text>
-                    </TouchableOpacity>
-                    <Text style={{ color: '#48ffa4', width: 30 }}>{speed}x</Text>
-                    <TouchableOpacity style={styles.speedButton} onPress={increaseSpeed}>
-                        <Text style={{ color: '#141e3a', fontSize: 21, fontWeight: 'bold' }}>+</Text>
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                        <TouchableOpacity style={styles.speedButton} onPress={decreaseSpeed}>
+                            <Text style={{ color: '#141e3a', fontSize: 21, fontWeight: 'bold' }}>-</Text>
+                        </TouchableOpacity>
+                        <Text style={{ color: '#48ffa4', width: 30, textAlign: 'center' }}>{speed}x</Text>
+                        <TouchableOpacity style={styles.speedButton} onPress={increaseSpeed}>
+                            <Text style={{ color: '#141e3a', fontSize: 21, fontWeight: 'bold' }}>+</Text>
+                        </TouchableOpacity>
+                    </View>
                     <Text style={{ color: '#48ffa4' }}>{score}/{questions.length}</Text>
                     <TouchableOpacity onPress={startGame}>
                         <Text style={{ color: '#48ffa4', fontWeight: 'bold' }}>Start Game</Text>
@@ -78,7 +82,6 @@ const App = () => {
     useEffect(() => {
         if (!isGameStarted || isGameOver) return;
 
-        // Reset animated values
         answer1Y.value = height;
         answer2Y.value = height;
         answer3Y.value = height;
@@ -104,9 +107,11 @@ const App = () => {
 
     // Handle answer tap
     const handleAnswerTap = (answer) => {
-        if (answer === currentQuestion.correctAnswer) {
-            setScore(score + 1);
-        }
+        if (currentAnswer !== answer)
+            if (answer === currentQuestion.correctAnswer) {
+                setScore(score + 1);
+                setCurrentAnswer(answer)
+            }
     };
 
     // Reset the game
@@ -153,8 +158,12 @@ const App = () => {
     }));
 
     return (
-        <LinearGradient style={styles.container} colors={['#141e3a', '#07426f', '#141e3a']}>
-            <Text style={styles.questionText}>{currentQuestion.question}</Text>
+        <LinearGradient style={styles.container} colors={['#141e3a', '#07426f', '#07426f', '#141e3a']}>
+
+            {
+                isGameStarted && !isGameOver? <Text style={styles.questionText}>{currentQuestion.question}</Text>
+                    : <Text style={styles.questionText}>Let's Play to gether!</Text>
+            }
 
             {/* Answer 1 */}
             <Animated.View style={[styles.answerContainer, animatedStyle1]}>
@@ -219,7 +228,8 @@ const styles = StyleSheet.create({
         color: '#48ffa4',
         zIndex: 1000,
         position: 'absolute',
-        top: 20
+        top: 20,
+        margin: 10
     },
     answerContainer: {
         marginVertical: 10
@@ -227,13 +237,16 @@ const styles = StyleSheet.create({
     answerBox: {
         width: 120,
         height: 120,
-        borderRadius: 60,
+        borderTopRightRadius: 100,
+        borderTopLeftRadius: 100,
+        borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#07426f'
+        backgroundColor: '#141e3a'
     },
     answerText: {
-        fontSize: 18,
+        // fontSize: 18,
+        padding: 3,
         color: '#48ffa4',
     },
 });
