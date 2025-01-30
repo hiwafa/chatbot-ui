@@ -20,7 +20,8 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import axios from "axios";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useUser } from "../context/UserContext";
-import { addUser } from "../api/api-request"
+import { addUser } from "../api/api-request";
+import { apiUrl } from "../api/api-request";
 
 const ChatUI = () => {
 
@@ -45,7 +46,7 @@ const ChatUI = () => {
 
   async function getRandomAnswer(questionText) {
     try {
-      const response = await axios.get('http://localhost:8000/random_answer', {
+      const response = await axios.get(`${apiUrl}/random_answer`, {
         params: {
           question_text: questionText,
         },
