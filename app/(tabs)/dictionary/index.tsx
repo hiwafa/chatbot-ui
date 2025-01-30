@@ -9,7 +9,7 @@ import CSVUploader from "@/src/components/CSVUploader";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-const apiUrl = "http://127.0.0.1:8000"; // Replace with your local IP address
+import { apiUrl } from "@/src/api/api-request";
 
 type Question = {
   question_text: string;
@@ -196,10 +196,10 @@ const App = () => {
             />
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-              <TouchableOpacity style={styles.button} onPress={handleAddQuestion}>
+              <TouchableOpacity onPress={handleAddQuestion}>
                 <Text style={styles.buttonText}>Save Question</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => setModalVisible(false)}>
+              <TouchableOpacity onPress={() => setModalVisible(false)}>
                 <Text style={styles.buttonText}>Cancel</Text>
               </TouchableOpacity>
             </View>
@@ -220,10 +220,10 @@ const App = () => {
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
 
-              <TouchableOpacity style={styles.button} onPress={handleEdit}>
+              <TouchableOpacity onPress={handleEdit}>
                 <Text style={styles.buttonText}>Save Edit</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => setEditingQuestion(null)}>
+              <TouchableOpacity onPress={() => setEditingQuestion(null)}>
                 <Text style={styles.buttonText}>Cancel</Text>
               </TouchableOpacity>
 
@@ -315,8 +315,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     flexDirection: 'row',
     borderRadius: 5
-  },
-  button: {
   },
   buttonText: {
     color: '#48ffa4',

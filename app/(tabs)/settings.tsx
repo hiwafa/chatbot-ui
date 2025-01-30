@@ -7,7 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
-const apiUrl = "http://127.0.0.1:8000";
+import { apiUrl } from '@/src/api/api-request';
 
 export default function App() {
 

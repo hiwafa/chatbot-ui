@@ -5,7 +5,7 @@ import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-const apiUrl = "http://127.0.0.1:8000";
+import { apiUrl } from '@/src/api/api-request';
 
 const AnswerList = () => {
 

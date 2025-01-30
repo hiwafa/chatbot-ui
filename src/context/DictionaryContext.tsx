@@ -1,6 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
-// Create the context
 const Dictionary = createContext<any>(null);
 
 const initial_state = {
@@ -9,9 +8,8 @@ const initial_state = {
     }
 };
 
-// Provider component
 export const DictionaryProvider = ({ children }: { children: ReactNode }) => {
-    const [dictionary, setDictionary] = useState(initial_state); // Global state
+    const [dictionary, setDictionary] = useState(initial_state); 
 
     return (
         <Dictionary.Provider value={{ dictionary, setDictionary }}>
@@ -20,5 +18,4 @@ export const DictionaryProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
-// Hook for consuming the context
 export const useDictionary = () => useContext(Dictionary);

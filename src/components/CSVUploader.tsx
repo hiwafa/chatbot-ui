@@ -5,7 +5,7 @@ import Papa from 'papaparse';
 import axios from "axios";
 import { useConfirmationDialog } from './ConfirmationDialog';
 
-const apiUrl = "http://127.0.0.1:8000";
+import { apiUrl } from '../api/api-request';
 
 export default function CSVUploader() {
 

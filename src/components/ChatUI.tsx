@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Platform,
   Modal,
+  ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -18,19 +19,27 @@ import Entypo from '@expo/vector-icons/Entypo';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import axios from "axios";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
+import { useUser } from "../context/UserContext";
+import { addUser } from "../api/api-request"
 
 const ChatUI = () => {
 
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { user, storeUserInfo } = useUser();
 
   const [messages, setMessages] = useState([
     { userId: 2, message: "Hallo, wie kann ich dir helfen?" },
   ]);
 
   const [newMessage, setNewMessage] = useState("");
+  const [userIdText, setUserIdText] = useState("");
+  const [userFirstNameText, setUserFirstNameText] = useState("");
+  const [userLastNameText, setUserLastNameText] = useState("");
+  const [warningText, setWarningText] = useState("");
+
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLoginModalVisible, setLoginModalVisible] = useState(false);
 
   const screenWidth = Dimensions.get("window").width;
 
@@ -67,6 +76,32 @@ const ChatUI = () => {
     getRandomAnswer(newMessage);
     setNewMessage("");
   };
+
+  const handleSignup = async () => {
+    if (userIdText && userFirstNameText && userLastNameText) {
+      const user_info = {
+        user_id: userIdText,
+        user_role: 'viewer',
+        user_first_name: userFirstNameText,
+        user_last_name: userLastNameText,
+        user_about: "",
+        user_image: "",
+        user_date_of_birth: ""
+      };
+      const response = await addUser(user_info);
+
+      if (response === 200) {
+        storeUserInfo(user_info);
+        setUserIdText("");
+        setUserFirstNameText("");
+        setUserLastNameText("");
+        setLoginModalVisible(false);
+      } else {
+        setWarningText(response)
+      }
+
+    }
+  }
 
   const renderMessage = ({ item }: { item: { userId: number; message: string } }) => {
     const isUser1 = item.userId === 2;
@@ -107,11 +142,76 @@ const ChatUI = () => {
         <View style={styles.modalBackground}>
           <LinearGradient colors={['#07426f', '#07426f', '#141e3a']} style={styles.modalContainer}>
 
-            <TouchableOpacity onPress={() => setIsModalVisible(false)} style={{position: 'absolute', top: 10, right: 10}}>
+            <TouchableOpacity onPress={() => setIsModalVisible(false)} style={{ position: 'absolute', top: 10, right: 10 }}>
               <FontAwesome name="close" size={24} color="#48ffa4" />
             </TouchableOpacity>
 
-            <Text style={{ color: '#48ffa4', fontWeight: 'bold', marginTop: 20, alignSelf: 'center' }}>I am chatbot. I answer your answer</Text>
+            <ScrollView style={{ padding: 20 }}>
+      <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 10, color: "#48ffa4" }}>
+        Chatbot Overview
+      </Text>
+      <Text style={{ fontSize: 16, marginBottom: 10, color: "#48ffa4" }}>
+        Our chatbot is a responsive program designed to answer questions quickly and efficiently. 
+        It can handle multiple queries simultaneously, ensuring a smooth user experience.
+      </Text>
+
+      <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 5, color: "#48ffa4" }}>
+        Key Features:
+      </Text>
+
+      <Text style={{ fontSize: 16, marginBottom: 5, color: "#48ffa4" }}>✅ <Text style={{ fontWeight: "bold" }}>Instant Responses</Text> – Provides quick and accurate answers to user questions.</Text>
+      <Text style={{ fontSize: 16, marginBottom: 5, color: "#48ffa4" }}>✅ <Text style={{ fontWeight: "bold" }}>Multi-Question Handling</Text> – Capable of responding to multiple queries at the same time.</Text>
+      <Text style={{ fontSize: 16, marginBottom: 5, color: "#48ffa4" }}>✅ <Text style={{ fontWeight: "bold" }}>Question & Answer Management</Text> – Organizes and manages user inquiries efficiently.</Text>
+      <Text style={{ fontSize: 16, marginBottom: 5, color: "#48ffa4" }}>✅ <Text style={{ fontWeight: "bold" }}>User Management</Text> – Supports user authentication and personalized interactions.</Text>
+      <Text style={{ fontSize: 16, marginBottom: 5, color: "#48ffa4" }}>✅ <Text style={{ fontWeight: "bold" }}>Simple Game Integration</Text> – Includes a built-in mini-game for user engagement.</Text>
+      <Text style={{ fontSize: 16, marginBottom: 5, color: "#48ffa4" }}>✅ <Text style={{ fontWeight: "bold" }}>Bulk File Upload Support</Text> – Allows users to upload multiple files at once.</Text>
+
+      <Text style={{ fontSize: 16, fontStyle: "italic", textAlign: "center", marginTop: 10, color: "#48ffa4" }}>
+        Our chatbot is designed to enhance productivity and user interaction with a seamless and intelligent response system. 🚀
+      </Text>
+    </ScrollView>
+
+          </LinearGradient>
+        </View>
+      </Modal>
+
+      <Modal visible={isLoginModalVisible} animationType="slide" transparent={true}>
+        <View style={styles.modalBackground}>
+          <LinearGradient colors={['#07426f', '#07426f', '#141e3a']} style={styles.modalContainer}>
+
+            <TouchableOpacity onPress={() => setLoginModalVisible(false)} style={{ position: 'absolute', top: 10, right: 10 }}>
+              <FontAwesome name="close" size={24} color="#48ffa4" />
+            </TouchableOpacity>
+
+            <Text style={{ color: '#48ffa4', fontWeight: 'bold', marginVertical: 5 }}>Signup:</Text>
+
+            <View>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter a unique user id"
+                value={userIdText}
+                onChangeText={setUserIdText}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your first name"
+                value={userFirstNameText}
+                onChangeText={setUserFirstNameText}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your last name"
+                value={userLastNameText}
+                onChangeText={setUserLastNameText}
+              />
+            </View>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+              <TouchableOpacity onPress={handleSignup}>
+                <Text style={styles.buttonText}>Submit</Text>
+              </TouchableOpacity>
+              <Text style={{ fontWeight: 'bold', color: 'orange', marginLeft: 10 }}>{warningText}</Text>
+            </View>
 
           </LinearGradient>
         </View>
@@ -152,7 +252,13 @@ const ChatUI = () => {
             />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => router.navigate("/dictionary")}>
+          <TouchableOpacity onPress={() => {
+            if (user.user_role && user.user_role !== "") {
+              router.navigate("/dictionary")
+            } else {
+              setLoginModalVisible(true)
+            }
+          }}>
             <MaterialCommunityIcons name="database-settings" size={35} color="#48ffa4" />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => router.navigate("/game")}>
@@ -162,7 +268,13 @@ const ChatUI = () => {
         </View>
         <View style={{ marginBottom: 20, gap: 10, alignItems: 'center' }}>
 
-          <TouchableOpacity onPress={() => router.navigate("/settings")}>
+          <TouchableOpacity onPress={() => {
+            if (user.user_role && user.user_role !== "") {
+              router.navigate("/settings")
+            } else {
+              setLoginModalVisible(true)
+            }
+          }}>
             <Image style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 1, borderColor: '#48ffa4' }}
               source={require('@/assets/images/boy.png')} />
           </TouchableOpacity>
@@ -238,7 +350,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     fontSize: 16,
-    color: '#ffffff',
+    color: '#48ffa4',
     borderWidth: 0,
     outlineStyle: 'none',
   },
@@ -266,6 +378,20 @@ const styles = StyleSheet.create({
     maxWidth: 700,
     borderRadius: 10,
   },
+  input: {
+    borderWidth: 1,
+    borderColor: "#48ffa4",
+    marginBottom: 10,
+    padding: 10,
+    color: '#48ffa4',
+    outlineStyle: 'none',
+  },
+  buttonText: {
+    color: '#48ffa4',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  }
 });
 
 export default ChatUI;
