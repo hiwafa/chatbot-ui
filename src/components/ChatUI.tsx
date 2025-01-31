@@ -29,9 +29,7 @@ const ChatUI = () => {
   const insets = useSafeAreaInsets();
   const { user, storeUserInfo } = useUser();
 
-  const [messages, setMessages] = useState([
-    { userId: 2, message: "Hallo, wie kann ich dir helfen?" },
-  ]);
+  const [messages, setMessages] = useState<any>([]);
 
   const [newMessage, setNewMessage] = useState("");
   const [userIdText, setUserIdText] = useState("");
@@ -291,6 +289,7 @@ const ChatUI = () => {
           renderItem={renderMessage}
           keyExtractor={(_, index) => index.toString()}
           contentContainerStyle={styles.listContent}
+          ListEmptyComponent={()=> <View style={{marginLeft: 20}}> <Text style={styles.messageText}>Hallo, wie kann ich dir helfen?</Text></View>}
         />
         <LinearGradient colors={['#07426f', '#141e3a', '#141e3a']} style={styles.inputContainer}>
           <TextInput
