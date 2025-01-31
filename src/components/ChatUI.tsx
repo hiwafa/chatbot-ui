@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginVertical: 5,
-    // width: '75%'
+    // width: 500
   },
   leftMessage: {
     // alignSelf: "flex-start",
