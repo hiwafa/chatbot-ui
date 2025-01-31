@@ -27,6 +27,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         try {
             const jsonValue = JSON.stringify(value);
             await AsyncStorage.setItem('userInfo', jsonValue);
+            setUser(value);
         } catch (e) {
 
         }

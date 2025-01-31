@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/chatbotlogo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.moo.surfing.chatbotui"
     },
     "web": {
       "bundler": "metro",
@@ -42,6 +43,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b1c3f42d-e8e9-46b4-9041-6d54cd9da2fd"
+      }
     }
   }
 }

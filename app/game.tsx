@@ -15,25 +15,70 @@ const { height } = Dimensions.get('window');
 
 const questions = [
     {
-        question: 'What is 2 + 2?',
-        answers: ['3', '4', '5', 'iloveprogramminglanguagesehr'],
-        correctAnswer: '4',
+        question: 'What is 3 + 5?',
+        answers: ['6', '7', '8', '9'],
+        correctAnswer: '8',
     },
     {
-        question: 'What is the capital of France?',
-        answers: ['Berlin', 'Madrid', 'Paris', 'Rome'],
-        correctAnswer: 'Paris',
-    },
-    {
-        question: 'Which planet is closest to the Sun? closest to the Sun?',
-        answers: ['Earth', 'Mars', 'Venus', 'Mercury'],
-        correctAnswer: 'Mercury',
+        question: 'What is the capital of Italy?',
+        answers: ['Rome', 'Venice', 'Milan', 'Florence'],
+        correctAnswer: 'Rome',
     },
     {
         question: 'What is the capital of Germany?',
-        answers: ['Berlin', 'Madrid', 'Paris Paris', 'Rome Rome Rome'],
+        answers: ['Rome', 'Venice', 'Berlin', 'Florence'],
         correctAnswer: 'Berlin',
     },
+    {
+        question: 'Which planet is known as the Red Planet?',
+        answers: ['Earth', 'Mars', 'Jupiter', 'Venus'],
+        correctAnswer: 'Mars',
+    },
+    {
+        question: 'What is the chemical symbol for water?',
+        answers: ['H2O', 'O2', 'CO2', 'H2'],
+        correctAnswer: 'H2O',
+    },
+    {
+        question: 'What is the capital of Japan?',
+        answers: ['Seoul', 'Tokyo', 'Beijing', 'Bangkok'],
+        correctAnswer: 'Tokyo',
+    },
+    {
+        question: 'What is the square root of 64?',
+        answers: ['6', '7', '8', '9'],
+        correctAnswer: '8',
+    },
+    {
+        question: 'Who wrote "Romeo and Juliet"?',
+        answers: ['Shakespeare', 'Dickens', 'Hemingway', 'Austen'],
+        correctAnswer: 'Shakespeare',
+    },
+    {
+        question: 'Which element has the atomic number 1?',
+        answers: ['Oxygen', 'Hydrogen', 'Helium', 'Carbon'],
+        correctAnswer: 'Hydrogen',
+    },
+    {
+        question: 'What is the largest ocean on Earth?',
+        answers: ['Atlantic Ocean', 'Indian Ocean', 'Arctic Ocean', 'Pacific Ocean'],
+        correctAnswer: 'Pacific Ocean',
+    },
+    {
+        question: 'Who painted the Mona Lisa?',
+        answers: ['Van Gogh', 'Picasso', 'Da Vinci', 'Dali'],
+        correctAnswer: 'Da Vinci',
+    },
+    {
+        question: 'What is the largest planet in our solar system?',
+        answers: ['Earth', 'Jupiter', 'Saturn', 'Mars'],
+        correctAnswer: 'Jupiter',
+    },
+    {
+        question: 'What is the capital of Canada?',
+        answers: ['Vancouver', 'Toronto', 'Ottawa', 'Montreal'],
+        correctAnswer: 'Ottawa',
+    }
 ];
 
 const App = () => {
