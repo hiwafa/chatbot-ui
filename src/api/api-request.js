@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 
-export const apiUrl = "http://einakie.com:8170";
+export const apiUrl = "https://einakie.com:8170";
 
 export const addUser = async ({
     user_id,
