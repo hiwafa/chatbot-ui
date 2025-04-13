@@ -59,7 +59,7 @@ const ChatUI = () => {
     } catch (error) {
       setMessages((prevMessages) => [
         ...prevMessages,
-        { userId: 2, message: "Sorry!!!!, Für diese Frage gibt es keine Antwort" },
+        { userId: 2, message: "Sorry!!!!!!!, Für diese Frage gibt es keine Antwort" },
       ]);
       console.error('Error fetching question:', error);
     }
